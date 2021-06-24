@@ -130,9 +130,11 @@ header = list(s)
 for item in header:
     if item not in import_headers:
         header.remove(item)
+
 for item in import_headers:
     if item not in header:
         header.append(item)
+
 print(header)
 with open("insert_entries.csv", 'w') as f:
     writer = csv.writer(f)
