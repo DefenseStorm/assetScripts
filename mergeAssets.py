@@ -31,7 +31,6 @@ if __name__ == "__main__":
             onboarding_file = arg
 
 if assets_file == None or onboarding_file == None:
-    print('here?')
     usage()
 
 with open(assets_file) as fin:
@@ -50,7 +49,6 @@ for ob_entry in onboarding:
     for asset in assets:
         if asset['MAC Addresses'].lower() == ob_entry['MAC Addresses'].lower():
             found = True
-            #print("Found MAC: " + str(asset['MAC Addresses']))
             updated = asset.copy()
             if updated['Importance'] == "none":
                 updated['Importance'] = ob_entry['Importance']
@@ -79,6 +77,7 @@ for ob_entry in onboarding:
                     updated['Hostnames'] = updated['Hostnames'] + "," + ob_entry['Hostnames']
                     #print("  Hostnames: " + str(ob_entry['Hostnames']))
                     #print("  Hostnames: " + str(updated['Hostnames']))
+            '''
             if 'Name' in ob_entry.keys():
                 if ob_entry['Name'].lower() != updated['Name'].lower():
                     print("  Name: " + str(ob_entry['Name']))
@@ -86,6 +85,7 @@ for ob_entry in onboarding:
             #print("Found MAC: " + str(asset))
             #print("Match MAC: " + str(ob_entry))
             update_entries.append(updated)
+            '''
         elif asset['IP Addresses'].lower() == ob_entry['IP Addresses'].lower():
             found = True
             print("Found IP but no or mismatched MAC: " + str(asset['IP Addresses']))
@@ -107,7 +107,6 @@ for ob_entry in onboarding:
             new_entry['Name'] = new_entry['Hostname']
         else:
             new_entry['Name'] = new_entry['IP Addresses']
-        print(new_entry)
         insert_entries.append(new_entry)
 
 print('Num to update: %d' %len(update_entries))
@@ -135,7 +134,6 @@ for item in import_headers:
     if item not in header:
         header.append(item)
 
-print(header)
 with open("insert_entries.csv", 'w') as f:
     writer = csv.writer(f)
     writer.writerow(header)
