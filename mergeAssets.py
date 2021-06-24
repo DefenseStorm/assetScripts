@@ -26,7 +26,6 @@ if __name__ == "__main__":
             usage()
         elif opt in ("-a"):
             assets_file = arg
-            print(assets_file)
         elif opt in ("-o"):
             onboarding_file = arg
 
