@@ -83,8 +83,8 @@ for ob_entry in onboarding:
                     print("  Name: " + str(updated['Name']))
             #print("Found MAC: " + str(asset))
             #print("Match MAC: " + str(ob_entry))
-            update_entries.append(updated)
             '''
+            update_entries.append(updated)
         elif asset['IP Addresses'].lower() == ob_entry['IP Addresses'].lower():
             found = True
             print("Found IP but no or mismatched MAC: " + str(asset['IP Addresses']))
@@ -110,6 +110,13 @@ for ob_entry in onboarding:
 
 print('Num to update: %d' %len(update_entries))
 print('Num to insert: %d' %len(insert_entries))
+
+'''
+for entry in update_entries:
+    for key in entry.keys():
+        if '\n' in entry[key]:
+            print(entry[key])
+'''
 
 s = set()
 for i in update_entries:
