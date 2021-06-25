@@ -34,11 +34,11 @@ if assets_file == None or onboarding_file == None:
 
 with open(assets_file) as fin:
     assets = [{k: v for k, v in row.items()}
-        for row in csv.DictReader(fin, skipinitialspace=True)]
+        for row in csv.DictReader(fin, quotechar='"', quoting=csv.QUOTE_ALL, delimiter=',', skipinitialspace=True)]
 
 with open(onboarding_file) as fin:
     onboarding = [{k: v for k, v in row.items()}
-        for row in csv.DictReader(fin, skipinitialspace=True)]
+        for row in csv.DictReader(fin, quotechar='"', quoting=csv.QUOTE_ALL, delimiter=',',skipinitialspace=True)]
 
 update_entries = []
 insert_entries = []
@@ -119,26 +119,38 @@ for entry in update_entries:
 '''
 
 s = set()
-for i in update_entries:
+for i in insert_entries:
     s.update(i)
 header = list(s)
+
+new_header = header.copy()
+
+for item in header:
+    found = False
+    for key in import_headers:
+        if key == item:
+            found = True
+            break
+    if not found:
+        new_header.remove(item)
+
+header = new_header.copy()
+
+for item in import_headers:
+    found = False
+    for key in import_headers:
+        if key == item:
+            found = True
+            break
+    if not found:
+        header.append(item)
+
 with open("update_entries.csv", 'w') as f:
     writer = csv.writer(f)
     writer.writerow(header)
     for d in update_entries:
-        writer.writerow([d.get(i, "None") for i in header])
+        writer.writerow([d.get(i, "") for i in header])
 
-s = set()
-for i in insert_entries:
-    s.update(i)
-header = list(s)
-for item in header:
-    if item not in import_headers:
-        header.remove(item)
-
-for item in import_headers:
-    if item not in header:
-        header.append(item)
 
 with open("insert_entries.csv", 'w') as f:
     writer = csv.writer(f)
