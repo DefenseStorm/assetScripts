@@ -145,17 +145,19 @@ for item in import_headers:
     if not found:
         header.append(item)
 
+with open("insert_entries.csv", 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    for d in insert_entries:
+        writer.writerow([d.get(i, "") for i in header])
+
+header.append("ID")
+
 with open("update_entries.csv", 'w') as f:
     writer = csv.writer(f)
     writer.writerow(header)
     for d in update_entries:
         writer.writerow([d.get(i, "") for i in header])
 
-
-with open("insert_entries.csv", 'w') as f:
-    writer = csv.writer(f)
-    writer.writerow(header)
-    for d in insert_entries:
-        writer.writerow([d.get(i, "") for i in header])
 
 
