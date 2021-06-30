@@ -138,12 +138,14 @@ header = new_header.copy()
 
 for item in import_headers:
     found = False
-    for key in import_headers:
+    for key in new_header:
         if key == item:
             found = True
             break
     if not found:
         header.append(item)
+
+print(header)
 
 with open("insert_entries.csv", 'w') as f:
     writer = csv.writer(f)
